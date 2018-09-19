@@ -1,0 +1,22 @@
+﻿@model List< MvcApplication40 .Models.BlogTbl>
+@{
+    ViewBag.Title = "GetBloggersList";
+}
+
+<h1 style="text-align:center">Bloggers</h1><hr />
+@if(Model.Count>0){
+  <div class="container">
+
+@foreach (var p in Model)
+{
+     <figure style="border:1px solid;padding:3px;margin:5px;float:left;display:inline">
+         <img  title="@p.CreatedBy" src="data:/img/png;base64,@Convert.ToBase64String(p.ImageData, 0, p.ImageData.Length)" width="200" height="200" />
+         <figcaption>@Html.ActionLink(p.CreatedBy.ToString(),"ReadBlogAccordingToAuthor","Blog",new {id=@p.Author},null) (  @p.Technology Blogs)</figcaption>
+     </figure>
+}
+      </div>
+}
+else
+{
+  <h1 style="text-align:center">No Blog Available </h1>
+}

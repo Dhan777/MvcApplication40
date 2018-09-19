@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MvcApplication40.Models.Users>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+<h1 style="text-align:center">Index</h1><hr />
+
+<p>
+    @Html.ActionLink("Create New", "AddNewUser","Admin")
+</p>
+    @if(Model.Count()>0){
+<table class="table table-bordered table-responsive">
+    <tr>
+                <th>Image</th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td><img src="data:/img/png;base64,@Convert.ToBase64String(item.ImageData,0,item.ImageData.Length)" height="100" width="100"  class="img img-circle img-responsive" /></td> 
+        <th>@Html.ActionLink(item.UserName,"","")</th>
+        <td>@Html.DisplayFor(modelItem => item.Password)</td>
+        <td>
+            @Html.ActionLink("Edit", "EditUSer", new { id=item.ID }) |
+            @Html.ActionLink("Details", "DetailsUSer", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "DeleteUser", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+    }
+    else{
+     <h1 style="text-align:center">No User Available</h1>   
+    }
+    </div>

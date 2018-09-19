@@ -1,0 +1,110 @@
+﻿ @{
+    var menus = new[]
+                {
+                   new { LinkText="My Profile", ActionName="MyProfile",ControllerName="Home",Roles="All"  },
+                   new { LinkText="Add Blog", ActionName="AddBlog",ControllerName="Admin",Roles="All"  },
+                };
+    var Users = new[]
+                {
+                   new { LinkText="Add New User", ActionName="AddNewUser",ControllerName="Admin",Roles="Admin"  },
+                   new { LinkText="Users List", ActionName="Index",ControllerName="User",Roles="Admin"  },
+                   new { LinkText="Bloggers", ActionName="GetBloggersList",ControllerName="Home",Roles="All"  },
+                };
+    var Technology = new[] 
+               { 
+                   new { LinkText="Add Technology", ActionName="AddTechnology",ControllerName="Technology",Roles="Admin"  },
+                   new { LinkText="Technology List", ActionName="BlogTechnologies",ControllerName="Technology",Roles="All"  },
+               };          
+} 
+<ul id="menu">
+     <nav class="navbar navbar-inverse ">
+         <div class="container-fluid">
+             <div class="navbar-header">
+      <a class="navbar-brand" href="#"> OMNINET Technologies</a>
+    </div>
+             <ul class="nav navbar-nav">
+                 <li class="active"><a href="/Home/Index">Home</a></li>
+                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> Blog <span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in menus
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => roles.Contains(x) || x == "All")
+                select item;
+    foreach (var link in links)
+    {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+}
+else{
+    var links = from item in menus
+                where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+                .Any(x=>new String[]{"All","Anonymous"}.Contains(x))      
+                select item;
+     foreach ( var link in links){     
+         @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>         
+     }
+}
+                     </ul>
+      </li>
+                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> User <span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in Users
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => roles.Contains(x) || x == "All")
+                select item;
+    foreach (var link in links)
+    {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+}
+else{
+    var links = from item in Users
+                where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+                .Any(x=>new String[]{"All","Anonymous"}.Contains(x))      
+                select item;
+     foreach ( var link in links){     
+         @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>         
+     }
+}
+                     </ul>
+      </li>
+                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> Technologies <span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in Technology
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => roles.Contains(x) || x == "All")
+                select item;
+    foreach (var link in links)
+    {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+}
+else{
+    var links = from item in Technology
+                where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+                .Any(x=>new String[]{"All","Anonymous"}.Contains(x))      
+                select item;
+     foreach ( var link in links){     
+         @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>         
+     }
+}
+                     </ul>
+      </li>
+                  </ul>
+             <ul class="nav navbar-nav navbar-right">
+           <li> @if(Request.IsAuthenticated){<a href="/Home/Logout"><span class="glyphicon glyphicon-user"></span>Logout</a>}
+           else{ <a href="/Home/Login"><span class="glyphicon glyphicon-user"></span>Login</a>}
+      </li>
+    </ul>
+                       </div>
+    </nav>
+</ul> 

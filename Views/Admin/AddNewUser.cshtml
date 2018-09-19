@@ -1,0 +1,30 @@
+﻿@model MvcApplication40.Models.Users
+
+<h1 style="text-align:center">Add New User</h1><hr />
+<div class="container">
+@using (Html.BeginForm("AddNewUser", "Admin", FormMethod.Post, new  {enctype="multipart/form-data" }))
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>User Name</th>
+            <td>@Html.EditorFor(x=>x.UserName)</td>
+            <td>@Html.ValidationMessageFor(x=>x.UserName)</td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>@Html.EditorFor(x=>x.Password)</td>
+            <td>@Html.ValidationMessageFor(x=>x.Password)</td>
+        </tr>
+        <tr>
+            <th>Select Image</th>
+            <td>@Html.TextBoxFor(x=>x.File,new{type="file",required="required"})</td>
+            <td>@Html.ValidationMessageFor(x=>x.File)</td>
+        </tr>
+    </table>
+       <br />
+    <input type="submit" value="Add User" class="btn tbn-success btn-lg" />
+}
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

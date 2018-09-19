@@ -1,0 +1,99 @@
+﻿@model List<MvcApplication40.Models.BlogTbl>
+
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+@*@{
+    var menus = new[]
+                {
+                   new { LinkText="Add Blog", ActionName="AddBlog",ControllerName="Admin",Roles="Admin"  },
+                   new { LinkText="Add Technology", ActionName="AddTechnology",ControllerName="Technology",Roles="Admin"  },
+                   new { LinkText="Add New User", ActionName="Index",ControllerName="User",Roles="Admin" },
+                   new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="Admin,User"  },
+
+                };
+}*@
+@if(Model.Count!=0){
+<h2 style="text-align:center">MyProfile</h2><hr />
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                <img src="data:/img/png;base64,@Convert.ToBase64String(Model[0].UserImage, 0, Model[0].UserImage.Length)" width="100" height="50" class="img img-thumbnail img-responsive" />
+            </td>
+            <td>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>@Model[0].CreatedBy</th>
+                    </tr>
+                    <tr>
+                        <td>ASP.NET, VB.NET, C#, MVC, <br /> AngularJS, Silverlight, WPF, WCF, SQL,</td>
+                    </tr>
+                    <tr>
+                        <td>Member since Sep 02 2006</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+      <h2>RECENT POSTS</h2>
+@{
+    foreach(var p in Model)
+    {
+    <table>
+        <tr>
+            <td rowspan="2"><a href="/Blog/ReadBlogAccordingToTechnology/@p.TechnologyID"><img class="img img-thumbnail img-responsive" src="data:/img/png;base64,@Convert.ToBase64String(p.TechnologyImage, 0, p.TechnologyImage.Length)" width="50" height="50" /></a></td>
+            <td>
+                <table>
+                    <tr>
+                        <td>@Html.ActionLink(p.BlogTitle.ToString(), "ReadBlog", "Blog", new { id = @p.BlogID }, null)</td></tr><tr>
+                        <td id="Author">By @Html.ActionLink(p.CreatedBy.ToString(),"ReadBlogAccordingToAuthor","Blog",new {id=@p.Author},null) Uploaded On @p.UploadedDate</td></tr><tr>
+                        <td>
+                                  @Html.ActionLink("Edit", "EditBlog", "Blog", new { id = p.BlogID }, null)
+                                  @Html.ActionLink("Delete", "DeleteBlog", "Blog", new { id = p.BlogID }, null)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+           
+        </tr>
+    </table>
+    <br />
+    }
+}
+    </div>
+}
+else{
+ <h1 style="text-align:center">No Blog Available</h1>
+}
+
+
+
+
+ 
+
+@*<div class="container">
+<ul id="menu">
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    String[] roles = Roles.GetRolesForUser();
+    var links = from item in menus
+                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                .Any(x => roles.Contains(x) || x == "All")
+                select item;
+    foreach (var link in links)
+    {
+        @: <li> @Html.ActionLink(link.LinkText, link.ActionName,link.ControllerName)</li>
+    }
+}
+else{
+    var links = from item in menus
+                where item.Roles.Split(new String[]{","},StringSplitOptions.RemoveEmptyEntries)
+                .Any(x=>new String[]{"All","Anonymous"}.Contains(x))      
+                select item;
+     foreach ( var link in links){     
+         @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>         
+     }
+}
+</ul> </div>*@

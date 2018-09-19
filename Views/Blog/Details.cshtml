@@ -1,0 +1,13 @@
+﻿@model List<MvcApplication40.Models.BlogTbl>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+@{
+    foreach(var p in Model)
+    {
+      @Html.ActionLink(p.BlogTitle, "ReadBlog", "Blog", new{@ID=p.BlogID },null )   <br />  
+    }
+}

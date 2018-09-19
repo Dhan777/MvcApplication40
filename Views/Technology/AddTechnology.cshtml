@@ -1,0 +1,28 @@
+﻿@model MvcApplication40.Models.BlogTbl
+@{
+    ViewBag.Title = "AddTechnology";
+}
+<h1 style="text-align:center">Add New Technology</h1><hr />
+
+<div class="container">
+@using (Html.BeginForm("AddTechnology", "Technology", FormMethod.Post, new {enctype="multipart/form-data" }))
+{
+    <table class="table table-bordered">
+           <tr>
+        <th>@Html.LabelFor(x => x.Technology)</th>
+        <td>@Html.EditorFor(x => x.Technology)</td>
+        <td>@Html.ValidationMessageFor(x=>x.Technology)</td>
+      </tr>
+     <tr>
+        <th>Select Image</th>
+        <td>@Html.TextBoxFor(x => x.File, new {type="file" })</td>
+        <td>@Html.ValidationMessageFor(x=>x.File)</td>
+     </tr>
+         </table>
+    <input type="submit" value="Add Technology" class="btn tbn-success btn-lg" />
+}
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

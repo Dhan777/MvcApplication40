@@ -1,0 +1,57 @@
+﻿@model List< MvcApplication40 .Models.BlogTbl>
+@{
+    ViewBag.Title = "Index";
+}
+
+@*@foreach (var p in Model)
+{
+    <p>@Html.ActionLink(p.CreatedBy, "Details", "Blog", new  {@id=p.Author },null) (  @p.Technology Blogs)</p>
+}*@
+
+
+ <style>
+     a {
+         color: initial ;
+     }
+         a:hover ,#Author a:hover {
+             color: green;
+         }
+     #Author a {
+          color:red;
+     }
+ </style>
+<div class="container">
+      <h2>RECENT POSTS</h2>
+
+@{
+     if(Model.Count>0){
+    foreach(var p in Model)
+    {
+    <table>
+        <tr>
+            <td rowspan="2"><a href="/Blog/ReadBlogAccordingToTechnology/@p.TechnologyID"><img class="img img-thumbnail img-responsive" title="@p.Technology" src="data:/img/png;base64,@Convert.ToBase64String(p.TechnologyImage, 0, p.TechnologyImage.Length)" width="50" height="50" /></a></td>
+            <td>
+                <table>
+                    <tr>
+                        <td>@Html.ActionLink(p.BlogTitle.ToString(), "ReadBlog", "Blog", new { id = @p.BlogID }, null)</td></tr><tr>
+                        <td id="Author">By @Html.ActionLink(p.CreatedBy.ToString(),"ReadBlogAccordingToAuthor","Blog",new {id=@p.Author},null) Uploaded On @p.UploadedDate</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+    <br />
+    }
+}
+     else
+     {
+         <h1 style="text-align:center">No Blog Available</h1>
+     }
+}
+   
+    </div>
+
+@* Edit Delete Control For Users  *@
